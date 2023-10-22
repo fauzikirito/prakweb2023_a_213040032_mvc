@@ -1,17 +1,40 @@
 <div class="container mt-3">
 
     <div class="row">
-        <div class="col-6"> 
+      <div class="col-lg-6">
+        <?php Flasher::flash(); ?>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-lg-6">
         <button type="button" class="btn btn-primary tombolTambahData" data-toggle="modal" data-target="#formModal">
           Tambah Data Mahasiswa
         </button>
-        <br><br>
+      </div>
+    </div>
+
+    <div class="row mb-3">
+      <div class="col-lg-6">
+        <form action="<?= BASEURL; ?>/mahasiswa/cari" method="post">
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Cari Mahasiswa.." name="keyword" id="keyword" autocomplete="off">
+            <button class="btn btn-outline-primary type="submit" id="tombolCari">Cari</button>
+          </div>      
+        </form>
+      </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-6"> 
             <h3>Daftar Mahasiswa</h3>
             <ul class="list-group">
             <?php  foreach($data['mhs'] as $mhs ) : ?>
-               <li class="list-group-item d-flex justify-content-between align-items-center">
+               <li class="list-group-item">
                 <?php echo $mhs['nama']; ?>
-                <a href="<?php echo BASEURL; ?>/mahasiswa/detail/<?php echo $mhs['id']; ?>" class="badge badge-danger">detail</a>
+                <a href="<?php echo BASEURL; ?>/mahasiswa/hapus/<?php echo $mhs['id']; ?>" class="badge badge-danger float-right ml-1" onclick="return confirm('Yakin Dek?');">Hapus</a>
+                <a href="<?php echo BASEURL; ?>/mahasiswa/ubah/<?php echo $mhs['id']; ?>" class="badge badge-success float-right ml-1 tampilModalUbah" data-toggle="modal" data-target="#formModal" data-id="<?= $mhs['id'] ?>">Ubah</a>
+                <a href="<?php echo BASEURL; ?>/mahasiswa/detail/<?php echo $mhs['id']; ?>" class="badge badge-primary float-right ml-1">Detail</a>
                </li>
             <?php  endforeach; ?>
             </ul>  
@@ -21,7 +44,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="judulModal" aria-hidden="true"> <!-- formModalLabel -> judulModal -->
+<div class="modal fade" id="formModal" tabindex="-1" role="dialog" aria-labelledby="formModal" aria-hidden="true"> <!-- formModalLabel -> judulModal -->
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
